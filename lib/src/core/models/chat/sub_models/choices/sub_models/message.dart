@@ -10,6 +10,9 @@ final class OpenAIChatCompletionChoiceMessageModel {
   /// The [content] of the message.
   final String content;
 
+  /// The [name] of the user submitting the message
+  final String? name;
+
   @override
   int get hashCode {
     return role.hashCode ^ content.hashCode;
@@ -19,6 +22,7 @@ final class OpenAIChatCompletionChoiceMessageModel {
   const OpenAIChatCompletionChoiceMessageModel({
     required this.role,
     required this.content,
+    this.name
   });
 
   /// This is used  to convert a [Map<String, dynamic>] object to a [OpenAIChatCompletionChoiceMessageModel] object.
@@ -29,6 +33,7 @@ final class OpenAIChatCompletionChoiceMessageModel {
       role: OpenAIChatMessageRole.values
           .firstWhere((role) => role.name == json['role']),
       content: json['content'],
+      name: json['name'],
     );
   }
 
@@ -37,12 +42,13 @@ final class OpenAIChatCompletionChoiceMessageModel {
     return {
       "role": role.name,
       "content": content,
+      "name": name,
     };
   }
 
   @override
   String toString() {
-    return 'OpenAIChatCompletionChoiceMessageModel(role: $role, content: $content)';
+    return 'OpenAIChatCompletionChoiceMessageModel(role: $role, content: $content, name: $name)';
   }
 
   @override
@@ -51,6 +57,7 @@ final class OpenAIChatCompletionChoiceMessageModel {
 
     return other is OpenAIChatCompletionChoiceMessageModel &&
         other.role == role &&
-        other.content == content;
+        other.content == content &&
+        other.name == name;
   }
 }
